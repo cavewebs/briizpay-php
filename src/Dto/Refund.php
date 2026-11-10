@@ -18,7 +18,6 @@ final readonly class Refund
     public function __construct(
         public string $id,
         public string $paymentRequestId,
-        public string $transactionId,
         public int $amountMinor,
         public RefundStatus $status,
         public ?string $reason = null,
@@ -27,7 +26,18 @@ final readonly class Refund
         public ?string $completedAt = null,
         public ?RefundMode $mode = null,
         public ?string $message = null,
+        public ?string $transactionId = null,
     ) {
+    }
+
+    /**
+     * Id of the payment this refunds. Present on current POST /v1/refunds
+     * (and GET /v1/payment-requests/{id}/refunds) responses; null when the
+     * key is missing or JSON null.
+     */
+    public function getTransactionId(): ?string
+    {
+        return $this->transactionId;
     }
 
     /**
@@ -51,7 +61,6 @@ final readonly class Refund
         return new self(
             id: Map::string($data, 'id'),
             paymentRequestId: Map::string($data, 'paymentRequestId'),
-            transactionId: Map::optionalString($data, 'transactionId') ?? '',
             amountMinor: Map::int($data, 'amountMinor'),
             status: RefundStatus::fromApi(Map::string($data, 'status')),
             reason: Map::optionalString($data, 'reason'),
@@ -60,6 +69,7 @@ final readonly class Refund
             completedAt: Map::optionalString($data, 'completedAt'),
             mode: $mode,
             message: $message,
+            transactionId: Map::optionalString($data, 'transactionId'),
         );
     }
 

@@ -18,7 +18,7 @@ final class RefundTest extends TestCase
 
         self::assertSame('rf_1', $refund->id);
         self::assertSame('pr_1', $refund->paymentRequestId);
-        self::assertSame('txn_9f', $refund->transactionId);
+        self::assertSame('txn_9f', $refund->getTransactionId());
         self::assertSame(1995, $refund->amountMinor);
         self::assertSame(RefundStatus::Pending, $refund->status);
         self::assertSame('Returned', $refund->reason);
@@ -66,6 +66,7 @@ final class RefundTest extends TestCase
         ]);
 
         self::assertSame(RefundStatus::Held, $refund->status);
+        self::assertSame('txn_9f', $refund->getTransactionId());
     }
 
     public function testFailedStatus(): void
@@ -78,6 +79,38 @@ final class RefundTest extends TestCase
         ]);
 
         self::assertSame(RefundStatus::Failed, $refund->status);
-        self::assertSame('', $refund->transactionId);
+        self::assertNull($refund->getTransactionId());
+    }
+
+    public function testTransactionIdPresent(): void
+    {
+        $refund = Refund::fromArray(Fixture::json('refund-completed.json'));
+
+        self::assertSame('txn_9f', $refund->getTransactionId());
+    }
+
+    public function testTransactionIdJsonNullParsesAsNull(): void
+    {
+        $refund = Refund::fromArray([
+            'id' => 'rf_n',
+            'paymentRequestId' => 'pr_1',
+            'amountMinor' => 50,
+            'status' => 'PENDING',
+            'transactionId' => null,
+        ]);
+
+        self::assertNull($refund->getTransactionId());
+    }
+
+    public function testTransactionIdMissingKeyParsesAsNull(): void
+    {
+        $refund = Refund::fromArray([
+            'id' => 'rf_m',
+            'paymentRequestId' => 'pr_1',
+            'amountMinor' => 50,
+            'status' => 'PENDING',
+        ]);
+
+        self::assertNull($refund->getTransactionId());
     }
 }

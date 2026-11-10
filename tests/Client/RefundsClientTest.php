@@ -28,6 +28,7 @@ final class RefundsClientTest extends TestCase
         self::assertSame('rf_1', $refund->id);
         self::assertSame(RefundStatus::Pending, $refund->status);
         self::assertSame(RefundMode::Manual, $refund->mode);
+        self::assertSame('txn_9f', $refund->getTransactionId());
         self::assertNotNull($refund->instruction());
 
         $request = $pair['http']->requests[0];

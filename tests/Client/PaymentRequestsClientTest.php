@@ -33,6 +33,7 @@ final class PaymentRequestsClientTest extends TestCase
         self::assertSame('pr_01HZX', $created->id);
         self::assertSame(PaymentStatus::Pending, $created->status);
         self::assertSame('https://app.briizpay.com/pay/pl/pr_01HZX', $created->payUrl);
+        self::assertNull($created->getTransactionId());
         self::assertCount(1, $pair['http']->requests);
 
         $request = $pair['http']->requests[0];
@@ -61,7 +62,7 @@ final class PaymentRequestsClientTest extends TestCase
         $fetched = $pair['client']->getPaymentRequest('pr_01HZX');
 
         self::assertTrue($fetched->isPaid());
-        self::assertSame('txn_9f', $fetched->transactionId);
+        self::assertSame('txn_9f', $fetched->getTransactionId());
         $request = $pair['http']->requests[0];
         self::assertSame('GET', $request->getMethod());
         self::assertSame('https://api.briizpay.com/v1/payment-requests/pr_01HZX', (string) $request->getUri());
@@ -89,6 +90,7 @@ final class PaymentRequestsClientTest extends TestCase
         $cancelled = $pair['client']->cancelPaymentRequest('pr_01HZX');
 
         self::assertSame(PaymentStatus::Cancelled, $cancelled->status);
+        self::assertNull($cancelled->getTransactionId());
         $request = $pair['http']->requests[0];
         self::assertSame('POST', $request->getMethod());
         self::assertSame(

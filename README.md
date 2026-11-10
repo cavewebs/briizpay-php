@@ -76,6 +76,18 @@ Amounts are integer minor units plus a 3-letter currency. Receipt lines must add
 
 `createRefund()` reports a shop refund. It does not move money. Set `externalReference` to the shop's own refund id so a retry returns the first row. The response keeps `mode` (`auto` or `manual`) and `msg` from the envelope so you can tell the merchant whether they still have to send the money. The plugins unwrap `data` and drop those fields; this SDK does not.
 
+### Transaction ID
+
+`getTransactionId(): ?string` is on `PaymentRequest`, `WebhookPaymentData`, and `Refund`. A missing key or JSON `null` both parse as `null`, so older API responses still work.
+
+| Call | `transactionId` |
+| --- | --- |
+| POST `/v1/payment-requests` | always `null` |
+| POST `/v1/payment-requests/{id}/cancel` | always `null` |
+| GET `/v1/payment-requests/{id}` | settled payment id, or `null` |
+| `payment_request.paid` webhook `data` | always set on current API |
+| POST `/v1/refunds` | the refunded payment's id |
+
 ### Webhooks
 
 Header: `Briizpay-Signature: t=<unix>,v1=<hex>`. The MAC is HMAC-SHA256 of `timestamp.body`, 300 second skew.
@@ -87,6 +99,7 @@ $event = $client->parse($payload, $header, getenv('BRIIZPAY_WEBHOOK_SECRET') ?: 
 
 if ($event->isPaymentRequestPaid()) {
     $orderId = $event->data->externalReference;
+    $transactionId = $event->data->getTransactionId();
 }
 ```
 

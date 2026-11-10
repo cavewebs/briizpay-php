@@ -34,6 +34,17 @@ final readonly class PaymentRequest
     }
 
     /**
+     * Settled payment id from GET /v1/payment-requests/{id}, or null.
+     *
+     * POST create and POST cancel always return null. A missing key on older
+     * API payloads also parses as null.
+     */
+    public function getTransactionId(): ?string
+    {
+        return $this->transactionId;
+    }
+
+    /**
      * @param array<mixed> $data
      */
     public static function fromArray(array $data): self

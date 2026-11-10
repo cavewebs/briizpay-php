@@ -23,8 +23,8 @@ final class WebhookEventTest extends TestCase
         self::assertSame('req_1', $event->data->paymentRequestId);
         self::assertSame('000000042', $event->data->externalReference);
         self::assertSame(1499, $event->data->amountMinor);
-        self::assertSame('txn_9f', $event->data->transactionId);
-        self::assertNull($event->data->currency);
+        self::assertSame('txn_9f', $event->data->getTransactionId());
+        self::assertSame('GBP', $event->data->currency);
         $money = $event->data->money();
         self::assertNotNull($money);
         self::assertSame(1499, $money->amountMinor);

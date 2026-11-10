@@ -12,6 +12,7 @@
     "lineItems": [],
     "payUrl": "https://app.briizpay.com/pay/pl/pr_01HZX",
     "expiresAt": "2026-11-10T14:00:00.000Z",
-    "createdAt": "2026-11-10T13:00:00.000Z"
+    "createdAt": "2026-11-10T13:00:00.000Z",
+    "transactionId": null
   }
 }

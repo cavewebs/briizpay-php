@@ -23,6 +23,7 @@ final class WebhookClientTest extends TestCase
         $event = $pair['client']->parse($payload, $header, 'secret', $now);
         self::assertSame('evt_magento', $event->id);
         self::assertSame('req_1', $event->data->paymentRequestId);
+        self::assertSame('txn_9f', $event->data->getTransactionId());
     }
 
     public function testClientParseRejectsBadSignature(): void

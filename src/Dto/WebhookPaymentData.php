@@ -11,6 +11,9 @@ use BriizPay\Sdk\Internal\Map;
  *
  * Magento requires paymentRequestId and externalReference. WooCommerce tries
  * externalReference first, then paymentRequestId. Both re-check amountMinor.
+ * After briizpay-api #340 the paid payload also always includes transactionId,
+ * status, amountMinor and currency. Those keys stay optional here so older
+ * events still parse.
  */
 final readonly class WebhookPaymentData
 {
@@ -21,6 +24,15 @@ final readonly class WebhookPaymentData
         public ?string $currency = null,
         public ?string $transactionId = null,
     ) {
+    }
+
+    /**
+     * Settled payment id. Always set on current `payment_request.paid` events;
+     * null when the key is missing or JSON null.
+     */
+    public function getTransactionId(): ?string
+    {
+        return $this->transactionId;
     }
 
     /**

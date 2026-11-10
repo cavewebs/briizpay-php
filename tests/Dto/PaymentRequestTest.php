@@ -34,7 +34,7 @@ final class PaymentRequestTest extends TestCase
         self::assertSame('https://app.briizpay.com/pay/pl/pr_01HZX', $request->payUrl);
         self::assertSame('2026-11-10T14:00:00.000Z', $request->expiresAt);
         self::assertSame('2026-11-10T13:00:00.000Z', $request->createdAt);
-        self::assertNull($request->transactionId);
+        self::assertNull($request->getTransactionId());
         self::assertFalse($request->isPaid());
     }
 
@@ -48,7 +48,34 @@ final class PaymentRequestTest extends TestCase
 
         self::assertSame(PaymentStatus::Completed, $request->status);
         self::assertTrue($request->isPaid());
-        self::assertSame('txn_9f', $request->transactionId);
+        self::assertSame('txn_9f', $request->getTransactionId());
+    }
+
+    public function testTransactionIdJsonNullParsesAsNull(): void
+    {
+        $request = PaymentRequest::fromArray([
+            'id' => 'pr_1',
+            'status' => 'PENDING',
+            'amountMinor' => 100,
+            'currency' => 'GBP',
+            'payUrl' => 'https://example.test/pay',
+            'transactionId' => null,
+        ]);
+
+        self::assertNull($request->getTransactionId());
+    }
+
+    public function testTransactionIdMissingKeyParsesAsNull(): void
+    {
+        $request = PaymentRequest::fromArray([
+            'id' => 'pr_1',
+            'status' => 'PENDING',
+            'amountMinor' => 100,
+            'currency' => 'GBP',
+            'payUrl' => 'https://example.test/pay',
+        ]);
+
+        self::assertNull($request->getTransactionId());
     }
 
     public function testCancelledAndExpiredStatuses(): void
@@ -60,6 +87,7 @@ final class PaymentRequestTest extends TestCase
         $cancelled = PaymentRequest::fromArray($cancelledData);
         self::assertSame(PaymentStatus::Cancelled, $cancelled->status);
         self::assertTrue($cancelled->status->isTerminalUnpaid());
+        self::assertNull($cancelled->getTransactionId());
 
         $expiredPayload = Fixture::json('payment-request-expired.json');
         self::assertIsArray($expiredPayload['data']);
