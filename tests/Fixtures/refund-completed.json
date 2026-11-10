@@ -1,0 +1,15 @@
+{
+  "data": {
+    "id": "rf_2",
+    "paymentRequestId": "pr_1",
+    "transactionId": "txn_9f",
+    "amountMinor": 1995,
+    "status": "COMPLETED",
+    "reason": "",
+    "externalReference": "magento_creditmemo_000000042",
+    "createdAt": "2026-11-10T13:05:00.000Z",
+    "completedAt": "2026-11-10T13:05:01.000Z"
+  },
+  "mode": "auto",
+  "msg": "Refunded. The money is on its way back to the customer."
+}

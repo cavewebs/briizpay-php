@@ -1,0 +1,12 @@
+{
+  "id": "evt_magento",
+  "type": "payment_request.paid",
+  "data": {
+    "paymentRequestId": "req_1",
+    "externalReference": "000000042",
+    "status": "COMPLETED",
+    "amountMinor": 1499,
+    "currency": "GBP",
+    "transactionId": "txn_9f"
+  }
+}

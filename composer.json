@@ -1,0 +1,55 @@
+{
+    "name": "briizpay/briizpay-php",
+    "description": "PHP SDK for the BriizPay public API: payment requests, refunds, and webhook signatures.",
+    "type": "library",
+    "license": [
+        "OSL-3.0",
+        "GPL-2.0-or-later"
+    ],
+    "keywords": [
+        "briizpay",
+        "open banking",
+        "payments",
+        "psr-18"
+    ],
+    "support": {
+        "issues": "https://github.com/cavewebs/briizpay-php/issues",
+        "source": "https://github.com/cavewebs/briizpay-php"
+    },
+    "require": {
+        "php": ">=8.4",
+        "ext-hash": "*",
+        "ext-json": "*",
+        "ext-mbstring": "*",
+        "psr/http-client": "^1.0",
+        "psr/http-factory": "^1.0",
+        "psr/http-message": "^1.1 || ^2.0"
+    },
+    "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.88",
+        "nyholm/psr7": "^1.8",
+        "phpstan/phpstan": "^2.1",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "BriizPay\\Sdk\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "BriizPay\\Sdk\\Tests\\": "tests/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit --configuration phpunit.xml.dist",
+        "phpstan": "phpstan analyse --configuration phpstan.neon.dist --memory-limit=512M",
+        "cs-check": "php-cs-fixer fix --dry-run --diff --ansi",
+        "cs-fix": "php-cs-fixer fix --ansi"
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
