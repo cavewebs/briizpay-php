@@ -1,0 +1,17 @@
+{
+  "data": {
+    "id": "pr_01HZX",
+    "status": "EXPIRED",
+    "amountMinor": 1485,
+    "currency": "GBP",
+    "memo": "Order 32 at Shop",
+    "externalReference": "32",
+    "customerName": null,
+    "customerEmail": null,
+    "returnUrl": null,
+    "lineItems": [],
+    "payUrl": "https://app.briizpay.com/pay/pl/pr_01HZX",
+    "expiresAt": "2026-11-10T14:00:00.000Z",
+    "createdAt": "2026-11-10T13:00:00.000Z"
+  }
+}

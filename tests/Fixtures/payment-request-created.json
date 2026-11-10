@@ -1,0 +1,33 @@
+{
+  "data": {
+    "id": "pr_01HZX",
+    "status": "PENDING",
+    "amountMinor": 1485,
+    "currency": "GBP",
+    "memo": "Order 32 at Shop",
+    "externalReference": "32",
+    "customerName": "Ada Lovelace",
+    "customerEmail": "ada@example.com",
+    "returnUrl": "https://shop.example/checkout/order-received/32/",
+    "lineItems": [
+      {
+        "name": "T-shirt",
+        "quantity": 1,
+        "unitPriceMinor": 1500,
+        "taxRateBps": 2000,
+        "taxInclusive": true,
+        "sku": "TEE-1"
+      },
+      {
+        "name": "Pay by bank discount",
+        "quantity": 1,
+        "unitPriceMinor": -15,
+        "taxRateBps": 0,
+        "taxInclusive": true
+      }
+    ],
+    "payUrl": "https://app.briizpay.com/pay/pl/pr_01HZX",
+    "expiresAt": "2026-11-10T14:00:00.000Z",
+    "createdAt": "2026-11-10T13:00:00.000Z"
+  }
+}

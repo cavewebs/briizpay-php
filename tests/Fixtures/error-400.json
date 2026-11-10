@@ -1,0 +1,4 @@
+{
+  "msg": "lineItems add up to 1500 but amountMinor is 1485. Send lines that add up to the amount, or leave lineItems out.",
+  "code": "LINE_ITEMS_TOTAL_MISMATCH"
+}
